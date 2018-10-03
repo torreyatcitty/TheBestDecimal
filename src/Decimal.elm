@@ -131,7 +131,7 @@ fromIntWithExponent n e =
 fromString : String -> Maybe Decimal
 fromString s =
     let
-        stringToDecimal s =
+        stringToDecimal targetString =
             let
                 stringIntToDecimal s_ e =
                     case BigInt.fromString s_ of
@@ -141,7 +141,7 @@ fromString s =
                         Just a ->
                             Just (Decimal a e)
             in
-            case String.split "." s of
+            case String.split "." targetString of
                 [ a, b ] ->
                     stringIntToDecimal (a ++ b) -(String.length b)
 
@@ -152,8 +152,8 @@ fromString s =
                     Nothing
     in
     let
-        makeMantissa s =
-            case String.split "." s of
+        makeMantissa targetString =
+            case String.split "." targetString of
                 [ s1 ] ->
                     stringToDecimal s1
 
@@ -164,8 +164,8 @@ fromString s =
                     Nothing
     in
     let
-        splitMantissaExponent s =
-            case String.split "e" (String.toLower s) of
+        splitMantissaExponent targetString =
+            case String.split "e" (String.toLower targetString) of
                 [ s1 ] ->
                     ( stringToDecimal s1, Ok 0 )
 
@@ -272,7 +272,7 @@ toFloat d =
 -}
 fromFloat : Float -> Maybe Decimal
 fromFloat f =
-    fromString (Basics.toString f)
+    fromString (String.fromFloat f)
 
 
 {-| Fast and dirty division. Don't expect too much precision from this division. Dividing by zero is bad, and Nothing will be returned.
@@ -499,12 +499,12 @@ and so on
 getDigit : Int -> Decimal -> Int
 getDigit n d =
     let
-        s =
+        decimalAsString =
             toString d
     in
     let
-        toInt d =
-            case d of
+        toInt targetDecimal =
+            case targetDecimal of
                 "1" ->
                     1
 
@@ -541,7 +541,7 @@ getDigit n d =
                 _ ->
                     -1
     in
-    case ( String.split "." s, Basics.compare n 0 ) of
+    case ( String.split "." decimalAsString, Basics.compare n 0 ) of
         ( [ a ], GT ) ->
             toInt (String.right 1 (String.dropRight n a))
 
@@ -569,7 +569,7 @@ getDigit n d =
 truncate : Int -> Decimal -> Decimal
 truncate n d =
     let
-        s =
+        decimalAsString =
             toString d
     in
     let
@@ -581,7 +581,7 @@ truncate n d =
                 Nothing ->
                     zero
     in
-    case ( String.split "." s, n >= 0 ) of
+    case ( String.split "." decimalAsString, n >= 0 ) of
         ( [ a ], True ) ->
             toDecimal (String.dropRight n a ++ String.repeat n "0")
 
