@@ -165,16 +165,16 @@ fromString s =
         splitMantissaExponent targetString =
             case String.split "e" (String.toLower targetString) of
                 [ s1 ] ->
-                    ( stringToDecimal s1, Ok 0 )
+                    ( stringToDecimal s1, Just 0 )
 
                 [ s1, s2 ] ->
                     ( stringToDecimal s1, String.toInt s2 )
 
                 _ ->
-                    ( Nothing, Err "" )
+                    ( Nothing, Nothing )
     in
     case splitMantissaExponent s of
-        ( Just (Decimal m a), Ok e ) ->
+        ( Just (Decimal m a), Just e ) ->
             Just (Decimal m (e + a))
 
         _ ->
@@ -244,10 +244,10 @@ toString (Decimal m e) =
 toFloat : Decimal -> Float
 toFloat d =
     case String.toFloat (toString d) of
-        Ok a ->
+        Just a ->
             a
 
-        Err _ ->
+        Nothing ->
             42.0
 
 
