@@ -4,7 +4,6 @@ module Decimal exposing
     , fromIntWithExponent
     , fromString
     , fromFloat
-    , unsafeFromString
     , toString
     , toFloat
     , add
@@ -42,7 +41,6 @@ module Decimal exposing
 @docs fromIntWithExponent
 @docs fromString
 @docs fromFloat
-@docs unsafeFromString
 
 
 # To stuff
@@ -181,21 +179,6 @@ fromString s =
 
         _ ->
             Nothing
-
-
-{-| Converts a String to a Decimal,
-but if the string does not represent
-a valid Decimal, it crashes.
-Useful for Decimal constants.
--}
-unsafeFromString : String -> Decimal
-unsafeFromString s =
-    case fromString s of
-        Just a ->
-            a
-
-        Nothing ->
-            Debug.crash "Invalid string for Decimal"
 
 
 insert_decimal_period : Int -> String -> String
