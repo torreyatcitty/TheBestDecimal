@@ -3,7 +3,7 @@
     "name": "torreyatcitty/the-best-decimal",
     "summary": "Arbitrary-Precision Decimal Numbers",
     "license": "MIT",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "exposed-modules": [
         "Decimal"
     ],

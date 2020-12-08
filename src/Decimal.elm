@@ -4,6 +4,8 @@ module Decimal exposing
     , fromIntWithExponent
     , fromString
     , fromFloat
+    , fromBigInt
+    , fromBigIntWithExponent
     , toString
     , toFloat
     , add
@@ -25,7 +27,6 @@ module Decimal exposing
     , zero
     , one
     , minusOne
-    , fromBigInt, fromBigIntWithExponent
     )
 
 {-|
@@ -42,6 +43,8 @@ module Decimal exposing
 @docs fromIntWithExponent
 @docs fromString
 @docs fromFloat
+@docs fromBigInt
+@docs fromBigIntWithExponent
 
 
 # To stuff
