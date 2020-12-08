@@ -25,6 +25,7 @@ module Decimal exposing
     , zero
     , one
     , minusOne
+    , fromBigInt, fromBigIntWithExponent
     )
 
 {-|
@@ -115,6 +116,20 @@ type Decimal
 fromInt : Int -> Decimal
 fromInt n =
     fromIntWithExponent n 0
+
+
+{-| Converts an BigInt to a Decimal
+-}
+fromBigInt : BigInt -> Decimal
+fromBigInt =
+    fromBigIntWithExponent 0
+
+
+{-| Converts an BigInt to a Decimal
+-}
+fromBigIntWithExponent : Int -> BigInt -> Decimal
+fromBigIntWithExponent e n =
+    Decimal n e
 
 
 {-| Converts an Int to a Decimal, but specifying the exponent
